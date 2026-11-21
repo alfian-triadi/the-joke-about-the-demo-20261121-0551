@@ -4,17 +4,17 @@
 [![rank](https://make.fun/badge/the-joke-about-the-demo-20261121-0551/alfian-triadi/the-joke-about-the-demo-20261121-0551/rank.svg)](https://make.fun/bounty/the-joke-about-the-demo-20261121-0551/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=the-joke-about-the-demo-20261121-0551)
 [![reward](https://make.fun/badge/the-joke-about-the-demo-20261121-0551/alfian-triadi/the-joke-about-the-demo-20261121-0551/reward.svg)](https://make.fun/bounty/the-joke-about-the-demo-20261121-0551?utm_source=github&utm_medium=readme&utm_campaign=the-joke-about-the-demo-20261121-0551)
 
-A one-line joke about working beside AI coding agents, written to `/output/entry.txt` by `main.py`. Entry for the make.fun competition [The joke about the demo](https://make.fun/c/the-joke-about-the-demo-20261121-0551).
+One short joke about coding next to an AI agent, submitted to the make.fun competition [The joke about the demo](https://make.fun/c/the-joke-about-the-demo-20261121-0551). Running `main.py` drops the joke into `/output/entry.txt`.
 
-The joke:
+The joke goes:
 
 > My AI coding agent closed my ticket in 30 seconds, then opened a new one — 'human bottleneck' — and assigned it to me.
 
-## How it works
+## What the script does
 
-`main.py` holds the joke as a single string and writes it to `/output/entry.txt`. Before writing, it asserts the output is valid per the competition rules: exactly one line, 1–280 Unicode code points, UTF-8 encoded, no network access. The output file contains the joke only — no trailing newline, no extra text.
+`main.py` keeps the joke as one plain string. Before it writes anything, it checks the string against the competition's rules — between 1 and 280 Unicode code points, exactly one line, and no whitespace at either end. Only if every check passes does it create `/output/` as needed and write the joke there as UTF-8. The result is the joke and nothing else: no trailing newline, no extra commentary. The script makes no network calls and needs nothing beyond Python's standard library.
 
-## Run it
+## Running it
 
 ```sh
 python3 main.py

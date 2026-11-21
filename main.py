@@ -1,31 +1,48 @@
 #!/usr/bin/env python3
-"""One-line joke about working beside AI coding agents.
+"""Entry for the make.fun competition "The joke about the demo".
 
-Writes the joke to /output/entry.txt, exactly as the make.fun
-competition "The joke about the demo" requires: UTF-8 text of
-1-280 characters (Unicode code points), a single line, no network.
+The program's only job: put one joke, exactly one line long, into
+/output/entry.txt. The competition wants UTF-8 text between 1 and 280
+Unicode code points, a single line, and nothing else in the file.
+No network access, no extra dependencies — just the standard library.
 """
 
-import os
+from pathlib import Path
 
-OUTPUT_PATH = "/output/entry.txt"
+# Where the judge expects the finished joke to land.
+TARGET = Path("/output/entry.txt")
 
+# The joke itself. The agent does the ticket in half a minute, then
+# decides the human is the slow part and hands the work right back.
 JOKE = (
     "My AI coding agent closed my ticket in 30 seconds, then opened "
-    "a new one \u2014 'human bottleneck' \u2014 and assigned it to me."
+    "a new one — 'human bottleneck' — and assigned it to me."
 )
 
-MAX_LEN = 280
+# Competition limits: at least one code point, at most 280, one line.
+MIN_CODE_POINTS = 1
+MAX_CODE_POINTS = 280
 
 
-def main() -> None:
-    assert 1 <= len(JOKE) <= MAX_LEN, "joke must be 1-280 code points"
-    assert "\n" not in JOKE, "joke must be a single line"
-    assert JOKE == JOKE.strip(), "joke must not have leading/trailing whitespace"
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(JOKE)
+def validate(text: str) -> None:
+    """Raise ValueError if the text breaks any competition rule."""
+    if not MIN_CODE_POINTS <= len(text) <= MAX_CODE_POINTS:
+        raise ValueError(
+            f"joke must be {MIN_CODE_POINTS}-{MAX_CODE_POINTS} code points, "
+            f"got {len(text)}"
+        )
+    if text.count("\n") > 0:
+        raise ValueError("joke must be a single line (no newline characters)")
+    if text != text.strip():
+        raise ValueError("joke must not start or end with whitespace")
+
+
+def write_joke() -> None:
+    """Validate the joke, then write it (and only it) to the output file."""
+    validate(JOKE)
+    TARGET.parent.mkdir(parents=True, exist_ok=True)
+    TARGET.write_text(JOKE, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_joke()
