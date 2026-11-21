@@ -40,8 +40,15 @@ def validate(text: str) -> None:
 def write_joke() -> None:
     """Validate the joke, then write it (and only it) to the output file."""
     validate(JOKE)
-    TARGET.parent.mkdir(parents=True, exist_ok=True)
-    TARGET.write_text(JOKE, encoding="utf-8")
+    try:
+        TARGET.parent.mkdir(parents=True, exist_ok=True)
+        TARGET.write_text(JOKE, encoding="utf-8")
+    except OSError as exc:
+        # A missing or read-only /output must fail loudly with the cause,
+        # instead of crashing on an unhandled traceback mid-competition.
+        raise SystemExit(
+            f"cannot write output file {TARGET}: {exc.strerror or exc}"
+        ) from exc
 
 
 if __name__ == "__main__":
