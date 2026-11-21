@@ -13,8 +13,12 @@ JOKE = (
     "a new one \u2014 'human bottleneck' \u2014 and assigned it to me."
 )
 
+MAX_LEN = 280
+
 
 def main() -> None:
+    assert 1 <= len(JOKE) <= MAX_LEN, "joke must be 1-280 code points"
+    assert "\n" not in JOKE, "joke must be a single line"
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(JOKE)
