@@ -10,6 +10,10 @@ The joke:
 
 > My AI coding agent closed my ticket in 30 seconds, then opened a new one — 'human bottleneck' — and assigned it to me.
 
+## How it works
+
+`main.py` holds the joke as a single string and writes it to `/output/entry.txt`. Before writing, it asserts the output is valid per the competition rules: exactly one line, 1–280 Unicode code points, UTF-8 encoded, no network access. The output file contains the joke only — no trailing newline, no extra text.
+
 ## Run it
 
 ```sh
